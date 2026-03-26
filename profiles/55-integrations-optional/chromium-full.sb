@@ -46,15 +46,22 @@
     (home-subpath "/Library/Application Support/Google/Chrome/Crashpad")                   ;; Chrome stable keeps Crashpad state under the regular Google Chrome app-support tree.
     (home-subpath "/Library/Application Support/Google/Chrome for Testing/Crashpad")       ;; Crashpad keeps its database and metadata under the Chrome for Testing app-support tree.
 )
+(allow file-read-xattr file-write-xattr
+    (home-subpath "/Library/Application Support/Google/Chrome for Testing/Crashpad")       ;; Chrome for Testing crashpad initialization probes xattrs on its initialized marker.
+)
 
 (allow mach-register
     (global-name-regex #"^com\.google\.Chrome\.MachPortRendezvousServer\.")
+    (global-name-regex #"^com\.google\.Chrome\.crashpad\.child_port_handshake\.")
     (global-name-regex #"^com\.google\.chrome\.for\.testing\.MachPortRendezvousServer\.")
+    (global-name-regex #"^com\.google\.chrome\.for\.testing\.crashpad\.child_port_handshake\.")
 )
 
 (allow mach-lookup
     (global-name-regex #"^com\.google\.Chrome\.MachPortRendezvousServer\.")
+    (global-name-regex #"^com\.google\.Chrome\.crashpad\.child_port_handshake\.")
     (global-name-regex #"^com\.google\.chrome\.for\.testing\.MachPortRendezvousServer\.")
+    (global-name-regex #"^com\.google\.chrome\.for\.testing\.crashpad\.child_port_handshake\.")
     (global-name "com.apple.pasteboard.1")
     (global-name "com.apple.system.opendirectoryd.api")
     (global-name "com.apple.ctkd.token-client")
